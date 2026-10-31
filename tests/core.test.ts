@@ -52,6 +52,18 @@ test('login rate limits failed passwords', async t => {
   assert.equal((await h.app.inject({ method: 'POST', url: '/api/auth/login', payload: { password } })).statusCode, 200);
 });
 
+test('HTTPS deployments redirect forwarded HTTP to the configured origin', async t => {
+  const store = new Store(':memory:', randomBytes(32));
+  const { app } = await createApp({ store, origin: 'https://console.example.com', timers: false, webRoot: '/nonexistent' });
+  t.after(async () => { await app.close(); store.close(); });
+  const redirect = await app.inject({ url: '/?view=nodes', headers: { 'x-forwarded-proto': 'http', host: 'untrusted.example' } });
+  assert.equal(redirect.statusCode, 308);
+  assert.equal(redirect.headers.location, 'https://console.example.com/?view=nodes');
+  const health = await app.inject({ url: '/api/health', headers: { 'x-forwarded-proto': 'https' } });
+  assert.equal(health.statusCode, 200);
+  assert.equal((await app.inject('/api/health')).statusCode, 200);
+});
+
 test('per-node tokens, data validation, rate feedback, rotation and removal', async t => {
   const h = await harness(t); const a = await h.createNode('A'); const b = await h.createNode('B');
   const send = (id: string, token: string, body: unknown) => h.app.inject({ method: 'POST', url: `/api/ingest/${id}`, headers: { authorization: `Bearer ${token}`, 'x-agent-platform': 'Linux' }, payload: body as object });

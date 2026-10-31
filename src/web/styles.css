@@ -1620,14 +1620,25 @@ h1 {
 .password-input {
   display: flex;
   align-items: center;
+  width: 100%;
+  min-width: 0;
   border: 1px solid #e4e8f1;
   border-radius: 9px;
   padding-left: 12px;
   color: #b1bad0;
 }
-.password-input input {
-  border: 0 !important;
-  background: transparent !important;
+.password-input:focus-within {
+  outline: 3px solid #abb4e7;
+  outline-offset: 2px;
+}
+.field .password-input input[type="password"] {
+  flex: 1;
+  width: 0;
+  min-width: 0;
+  border: 0;
+  border-radius: inherit;
+  background: transparent;
+  outline: none;
 }
 .login-submit {
   width: 100%;

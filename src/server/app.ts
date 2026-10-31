@@ -41,6 +41,8 @@ export async function createApp(options: AppOptions) {
       .header('X-Frame-Options', 'DENY').header('Permissions-Policy', 'camera=(), microphone=(), geolocation=()')
       .header('Content-Security-Policy', "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self'; font-src 'self'; object-src 'none'; base-uri 'none'; frame-ancestors 'none'; form-action 'self'");
     if (secureCookie) reply.header('Strict-Transport-Security', 'max-age=31536000');
+    if (secureCookie && req.headers['x-forwarded-proto'] === 'http')
+      return reply.redirect(publicOrigin + req.url, 308);
     const path = req.url.split('?')[0];
     if (path.startsWith('/api/')) reply.header('Cache-Control', 'no-store');
     if (!path.startsWith('/api/') || path.startsWith('/api/ingest/') || path === '/api/health' || path === '/api/auth') return;

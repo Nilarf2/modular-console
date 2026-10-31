@@ -1,0 +1,46 @@
+{
+  "name": "modular-console",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "engines": {
+    "node": ">=24.13.0"
+  },
+  "scripts": {
+    "dev": "concurrently -k 'tsx watch src/server/main.ts' 'vite --host 127.0.0.1'",
+    "build": "npm run typecheck && vite build && tsc -p tsconfig.server.json",
+    "typecheck": "tsc --noEmit",
+    "start": "node dist/server/main.js",
+    "test": "tsx --test tests/*.test.ts",
+    "test:agent": "python3 -m unittest discover -s agent/tests -p 'test_*.py'",
+    "test:e2e": "playwright test",
+    "init": "tsx scripts/init.ts",
+    "demo": "CONSOLE_DEMO=true tsx src/server/main.ts"
+  },
+  "dependencies": {
+    "@fastify/cookie": "^11.0.2",
+    "@fastify/static": "^10.1.8",
+    "fastify": "^5.12.7",
+    "lucide-react": "^0.577.0",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "zod": "^4.3.6"
+  },
+  "overrides": {
+    "@fastify/static": {
+      "glob": "^14.0.3"
+    }
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.58.2",
+    "@types/node": "^24.10.0",
+    "@types/react": "^19.2.0",
+    "@types/react-dom": "^19.2.0",
+    "@vitejs/plugin-react": "^6.0.0",
+    "concurrently": "^9.2.1",
+    "tsx": "^4.21.0",
+    "typescript": "~5.9.3",
+    "vite": "^8.3.5"
+  }
+}

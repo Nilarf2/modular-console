@@ -1,0 +1,52 @@
+services:
+  console:
+    build: .
+    image: modular-console:local
+    restart: unless-stopped
+    init: true
+    environment:
+      HOST: 0.0.0.0
+      PORT: "9470"
+      CONSOLE_DATA_DIR: /app/data/live
+      CONSOLE_PUBLIC_ORIGIN: ${CONSOLE_PUBLIC_ORIGIN:-http://127.0.0.1:9470}
+    ports:
+      - "127.0.0.1:${CONSOLE_HTTP_PORT:-9470}:9470"
+    volumes:
+      - console-data:/app/data/live
+    read_only: true
+    tmpfs:
+      - /tmp
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    stop_grace_period: 20s
+
+  demo:
+    profiles: [demo]
+    build: .
+    image: modular-console:local
+    restart: unless-stopped
+    init: true
+    environment:
+      HOST: 0.0.0.0
+      PORT: "9471"
+      CONSOLE_DEMO: "true"
+      CONSOLE_DATA_DIR: /app/data/demo
+      CONSOLE_PUBLIC_ORIGIN: http://127.0.0.1:9471
+    ports:
+      - "127.0.0.1:9471:9471"
+    volumes:
+      - console-demo:/app/data/demo
+    read_only: true
+    tmpfs:
+      - /tmp
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    stop_grace_period: 20s
+
+volumes:
+  console-data:
+  console-demo:

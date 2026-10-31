@@ -42,7 +42,7 @@ function HostMetrics({
       <div className={`host-metrics ${compact ? "compact-metrics" : ""}`}>
         <div className="host-metric">
           <div className="metric-label">
-            <Cpu size={14} /> CPU <span>{sample ? "使用率" : "等待数据"}</span>
+            <Cpu size={14} /> CPU
           </div>
           <div className="metric-value">{percent(sample?.cpuPct)}</div>
           <Bar value={sample?.cpuPct ?? null} />
@@ -110,7 +110,7 @@ function HostWidget({ widget, live, onHistory }: WidgetRenderProps) {
         </div>
         <div className="fleet-rows">
           {nodes.length === 0 ? (
-            <p className="widget-empty">暂无节点，前往节点页面注册。</p>
+            <p className="widget-empty">暂无节点</p>
           ) : (
             nodes.map((node) => (
               <button
@@ -187,7 +187,7 @@ function HostWidget({ widget, live, onHistory }: WidgetRenderProps) {
         <span>{node.name}</span>
         <span className="source-platform">{node.platform || "等待接入"}</span>
         <span className={`status-text ${node.online ? "positive" : ""}`}>
-          {node.online ? "在线" : "离线 · 数据已过期"}
+          {node.online ? "在线" : "离线"}
         </span>
       </div>
       <HostMetrics sample={sample} compact={compact} />

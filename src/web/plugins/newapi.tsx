@@ -1,4 +1,4 @@
-import { ArrowUpRight, CreditCard, Activity } from "lucide-react";
+import { CreditCard, Activity } from "lucide-react";
 import type { FrontendPlugin, WidgetRenderProps } from "./types";
 function UsageWidget({ widget, live }: WidgetRenderProps) {
   const connection = live.connections.find((c) => c.id === widget.sourceId);
@@ -57,21 +57,11 @@ function UsageWidget({ widget, live }: WidgetRenderProps) {
       {widget.variant === "detailed" && (
         <div className="today-usage">
           <div className="today-label">
-            <Activity size={14} /> 今日概览
-            <ArrowUpRight size={14} />
+            <Activity size={14} /> 今日消耗
           </div>
           <div className="today-grid">
             <div>
-              <small>消耗额度</small>
               <strong>{money(data?.todayQuota)}</strong>
-            </div>
-            <div>
-              <small>请求</small>
-              <strong>{format(data?.todayRequests)}</strong>
-            </div>
-            <div>
-              <small>Tokens</small>
-              <strong>{format(data?.todayTokens)}</strong>
             </div>
           </div>
         </div>
@@ -82,7 +72,6 @@ function UsageWidget({ widget, live }: WidgetRenderProps) {
             ? `更新于 ${new Date(connection.updatedAt).toLocaleTimeString("zh-CN", { hour12: false })}`
             : "尚未同步"}
         </span>
-        <span>New API</span>
       </div>
     </div>
   );

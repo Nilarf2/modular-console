@@ -1203,9 +1203,6 @@ function WidgetEditor({
           });
         }}
       >
-        <div className="form-section-label">
-          01 <span>选择组件</span>
-        </div>
         <label className="field">
           插件
           <select
@@ -1282,9 +1279,6 @@ function WidgetEditor({
             )}
           </label>
         )}
-        <div className="form-section-label">
-          02 <span>显示方式</span>
-        </div>
         <label className="field">
           组件标题
           <input
@@ -1551,7 +1545,7 @@ function ConnectionForm({
           </label>
         </div>
         <label className="field">
-          访问令牌
+          用户访问令牌
           <input
             type="password"
             required

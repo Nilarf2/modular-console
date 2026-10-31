@@ -982,21 +982,11 @@ h1 {
   color: #9ca6b7;
   font-size: 9px;
 }
-.today-label > svg:last-child {
-  margin-left: auto;
-  color: #bfc7d4;
-}
 .today-grid {
   display: grid;
-  grid-template-columns: 1.3fr 1fr 1fr;
+  grid-template-columns: 1fr;
   margin-top: 16px;
   gap: 10px;
-}
-.today-grid small {
-  display: block;
-  color: #b0b8c6;
-  font-size: 8px;
-  margin-bottom: 7px;
 }
 .today-grid strong {
   font-weight: 450;
